@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+	<title>Yard Sale - Fix Inequality</title>
+	<link href="automatic.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div id="container">
+		<div id="main_area">
+			<canvas id="canvas" width="600" height="500"></canvas>
+		</div>
+		<div id="stats">
+			<canvas id="stats_canvas" width="400" height="220"></canvas>
+			<div id="stats_text"></div>
+			<div>
+				<div class="btn" id="moving" onclick="START_SIM=!START_SIM; updateButtons()">&#x25B6; play</div>
+				<div class="btn" id="reset_btn" onclick="reset()">&#x21BB; reset</div>
+			</div>
+			<div id="controls">
+				<div class="slider-row">
+					<label>Poorer loses:</label>
+					<input type="range" id="sl_lose" min="1" max="30" value="17" oninput="updateLose()">
+					<span class="val" id="val_lose">16.7%</span>
+				</div>
+				<div class="slider-row" style="color:#777; font-size:12px;">
+					<label></label>
+					<span>Richer always pays: <b style="color:#ddd">20%</b> of the poorer's wealth on heads</span>
+				</div>
+			</div>
+			<div id="info_text" style="margin-top:12px">
+				What if we <b style="color:#ddd">reduce</b> how much the poorer person loses on tails?<br>
+				Try lowering the loss fraction...
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<script>
+window.SIM_CONFIG = { numPeople: 50 };
+</script>
+<script src="../lib/Mouse.js"></script>
+<script src="automatic.js"></script>
+<script>
+SPEED = 5;
+
+function updateLose() {
+	var loseVal = parseInt(document.getElementById("sl_lose").value);
+	LOSE_FRACTION = loseVal / 100;
+	document.getElementById("val_lose").textContent = (LOSE_FRACTION * 100).toFixed(1) + "%";
+}
+</script>

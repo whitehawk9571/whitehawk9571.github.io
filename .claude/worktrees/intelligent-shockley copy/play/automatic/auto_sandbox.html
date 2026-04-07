@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+	<title>Yard Sale - Sandbox</title>
+	<link href="automatic.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div id="container">
+		<div id="main_area">
+			<canvas id="canvas" width="600" height="500"></canvas>
+		</div>
+		<div id="stats">
+			<canvas id="stats_canvas" width="400" height="200"></canvas>
+			<div id="stats_text"></div>
+			<div>
+				<div class="btn" id="moving" onclick="START_SIM=!START_SIM; updateButtons()">&#x25B6; play</div>
+				<div class="btn" id="reset_btn" onclick="reset()">&#x21BB; reset</div>
+			</div>
+			<div id="controls">
+				<div class="slider-row">
+					<label>Loss fraction:</label>
+					<input type="range" id="sl_lose" min="1" max="30" value="17" oninput="updateSliders()">
+					<span class="val" id="val_lose">16.7%</span>
+				</div>
+				<div class="slider-row">
+					<label>Win fraction:</label>
+					<input type="range" id="sl_win" min="1" max="50" value="20" oninput="updateSliders()">
+					<span class="val" id="val_win">20%</span>
+				</div>
+				<div class="slider-row">
+					<label>Wealth tax:</label>
+					<input type="range" id="sl_tax" min="0" max="50" value="0" oninput="updateSliders()">
+					<span class="val" id="val_tax">0%</span>
+				</div>
+				<div class="slider-row">
+					<label>People:</label>
+					<input type="range" id="sl_people" min="10" max="100" value="50" oninput="updateSliders()">
+					<span class="val" id="val_people">50</span>
+				</div>
+				<div class="slider-row">
+					<label>Speed:</label>
+					<input type="range" id="sl_speed" min="1" max="50" value="5" oninput="updateSliders()">
+					<span class="val" id="val_speed">5x</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<script>
+window.SIM_CONFIG = { numPeople: 50, wealthTax: 0 };
+</script>
+<script src="../lib/Mouse.js"></script>
+<script src="automatic.js"></script>
+<script>
+SPEED = 5;
+
+function updateSliders() {
+	var loseVal = parseInt(document.getElementById("sl_lose").value);
+	var winVal = parseInt(document.getElementById("sl_win").value);
+	var taxVal = parseInt(document.getElementById("sl_tax").value);
+	var peopleVal = parseInt(document.getElementById("sl_people").value);
+	var speedVal = parseInt(document.getElementById("sl_speed").value);
+
+	LOSE_FRACTION = loseVal / 100;
+	WIN_FRACTION = winVal / 100;
+	WEALTH_TAX = taxVal / 1000; // 0-5%
+	SPEED = speedVal;
+
+	document.getElementById("val_lose").textContent = (LOSE_FRACTION * 100).toFixed(1) + "%";
+	document.getElementById("val_win").textContent = (WIN_FRACTION * 100).toFixed(1) + "%";
+	document.getElementById("val_tax").textContent = (WEALTH_TAX * 100).toFixed(1) + "%";
+	document.getElementById("val_speed").textContent = speedVal + "x";
+
+	// People change requires reset
+	if (peopleVal !== NUM_PEOPLE) {
+		NUM_PEOPLE = peopleVal;
+		SHOW_BAR_CHART = NUM_PEOPLE > 2;
+		document.getElementById("val_people").textContent = NUM_PEOPLE;
+		reset();
+	} else {
+		document.getElementById("val_people").textContent = NUM_PEOPLE;
+	}
+}
+</script>

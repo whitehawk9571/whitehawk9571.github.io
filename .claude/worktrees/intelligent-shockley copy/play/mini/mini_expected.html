@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head><style>
+body { margin:0; background:transparent; overflow:hidden; }
+canvas { display:block; }
+</style></head>
+<body>
+<canvas id="c" width="730" height="200"></canvas>
+<script>
+var c = document.getElementById("c");
+var ctx = c.getContext("2d");
+var W = c.width, H = c.height;
+
+function draw() {
+	ctx.clearRect(0,0,W,H);
+
+	var cx = W/2, cy = H/2;
+
+	// Heads side
+	ctx.fillStyle = "#f4d03f";
+	ctx.beginPath(); ctx.arc(cx - 220, 50, 30, 0, Math.PI*2); ctx.fill();
+	ctx.strokeStyle = "#d4a017"; ctx.lineWidth = 3; ctx.stroke();
+	ctx.fillStyle = "#9a7209"; ctx.font = "bold 22px sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+	ctx.fillText("H", cx-220, 51);
+
+	ctx.fillStyle = "#5f5"; ctx.font = "bold 16px sans-serif"; ctx.textBaseline = "top";
+	ctx.fillText("Poorer GAINS 20%", cx-220, 90);
+	ctx.fillStyle = "#aaa"; ctx.font = "14px sans-serif";
+	ctx.fillText("of their wealth", cx-220, 112);
+
+	// VS
+	ctx.fillStyle = "#666"; ctx.font = "bold 24px sans-serif"; ctx.textBaseline = "middle";
+	ctx.fillText("vs", cx, 50);
+
+	// Tails side
+	ctx.fillStyle = "#b8b8b8";
+	ctx.beginPath(); ctx.arc(cx + 220, 50, 30, 0, Math.PI*2); ctx.fill();
+	ctx.strokeStyle = "#888"; ctx.lineWidth = 3; ctx.stroke();
+	ctx.fillStyle = "#555"; ctx.font = "bold 22px sans-serif"; ctx.textBaseline = "middle";
+	ctx.fillText("T", cx+220, 51);
+
+	ctx.fillStyle = "#f66"; ctx.font = "bold 16px sans-serif"; ctx.textBaseline = "top";
+	ctx.fillText("Poorer LOSES 16.7%", cx+220, 90);
+	ctx.fillStyle = "#aaa"; ctx.font = "14px sans-serif";
+	ctx.fillText("of their wealth", cx+220, 112);
+
+	// Bottom summary
+	ctx.fillStyle = "#ddd"; ctx.font = "bold 15px sans-serif"; ctx.textBaseline = "top";
+	ctx.fillText("Seems fair? The poorer person even gains more than they lose!", cx, 155);
+	ctx.fillStyle = "#999"; ctx.font = "13px sans-serif";
+	ctx.fillText("(expected gain per flip: +1.67% of poorer's wealth)", cx, 178);
+}
+draw();
+</script>
+</body>
+</html>
